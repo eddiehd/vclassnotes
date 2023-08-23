@@ -1,22 +1,22 @@
 require('dotenv').config({ path: './w3s-dynamic-storage/.env' })
-const path = require('path');
-const express = require('express');
+import { resolve } from 'path';
+import express,{ static,json } from 'express';
 
 const app = express();
 
-app.use(express.static('dist'));
-app.use(express.json());
+app.use(static('dist'));
+app.use(json());
 
 app.get('/api/hello', async (req, res) => {
   res.send('Hello world');
 });
 
 const clientApp = express();
-clientApp.use(express.static('dist'));
-clientApp.use(express.json());
+clientApp.use(static('dist'));
+clientApp.use(json());
 
 clientApp.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+  res.sendFile(resolve(__dirname, '../../dist', 'index.html'));
 });
 
 
